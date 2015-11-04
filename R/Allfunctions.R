@@ -124,6 +124,30 @@ meth.call <- function(files_location, output_folder, no_overlap, read.context, N
     message()
 }
 
+#### combining reads of replicates within a single group 
+pool.reads <- function(files_location)
+{
+  if(!is.character(files_location))
+    stop('files_location has to be of class character ..')
+  files_location <- normalizePath(files_location)
+  all_files <- list.files(files_location,pattern=".txt")
+  setwd(files_location)
+  cmd <- paste("cat", paste(all_files, collapse= " "), ">", paste0(files_location, "/", "sample_merge.txt"))
+  system(cmd)
+  python.loc <- system.file("exec", "pools_reads.py", package="methylPipe")
+  #python.loc <- "/data/BA/kkishore/Collaboration_Tel_Aviv/methcall/test_merge/pools_reads.py"
+  merge_file_loc <- paste0(files_location, "/", "sample_merge.txt")
+  cmd <- paste("python", python.loc, merge_file_loc, ">",paste0(files_location, "/","sample_merge_pooled.txt"))
+  system(cmd)
+  cmd <- paste("sort -k1,1 -k2,4n", paste0(files_location, "/", "sample_merge_pooled.txt") , ">", 
+               paste0(files_location, "/", "sample_merge_pooled_sort.txt"))
+  system(cmd)
+  cmd <- paste("rm","*_merge.txt")
+  system(cmd)
+  cmd <- paste("rm","*_merge_pooled.txt")
+  system(cmd)
+}
+
 
 tabixdata2GR <- function(x) {
     if(length(x) == 0) return(NA)
