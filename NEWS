@@ -1,3 +1,10 @@
+CHANGES IN VERSION 1.4.2
+------------------------
+
+o updated or fixed the following functions:
+
+   + meth.stats: updated the coverage object error in this function
+
 CHANGES IN VERSION 1.4.1
 ------------------------
 

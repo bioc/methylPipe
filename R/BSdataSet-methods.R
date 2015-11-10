@@ -428,6 +428,7 @@ setMethod('methstats', 'BSdataSet', function(object, chrom, mcClass='mCG', minC=
       # removing cytosines positions not covered by sequencing
       uncov <- samples[[i]]@uncov
       uncov <- uncov[seqnames(uncov) == Chr]
+      uncov <- uncov[mcols(uncov)$score < cov]
       ov <- findOverlaps(ratioGR, uncov)
       if(length(ov)>0) ratioGR <- ratioGR[-unique(queryHits(ov))]
       if(length(ratioGR)== 0) return(NULL)
@@ -495,7 +496,8 @@ setMethod('methstats', 'BSdataSet', function(object, chrom, mcClass='mCG', minC=
   {
     usr <- par("usr"); on.exit(par(usr))
     par(usr = c(0, 1, 0, 1))
-    r <- abs(cor(x, y))
+    r <- cor(x, y)
+    #r <- abs(cor(x, y))
     txt <- format(c(r, 0.123456789), digits=digits)[1]
     test <- cor.test(x,y)
     Signif <- ifelse(round(test$p.value,3)<0.01,"p<0.01",paste("p=",round(test$p.value,3)))  
