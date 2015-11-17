@@ -10,7 +10,7 @@
   samples comparision.
 }
 \usage{
-\S4method{findDMR}{methylPipe,BSdataSet}(object, Nproc=10, ROI=NULL,
+\S4method{findDMR}{methylPipe,BSdataSet}(object, Nproc=NULL, ROI=NULL,
 pmdGRanges=NULL, MCClass='mCG', dmrSize=10, dmrBp=1000, binsize=0,
 eprop=0.3, coverage=1, Pvalue=NULL, SNPs=NULL)
 }

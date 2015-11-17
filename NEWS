@@ -1,3 +1,10 @@
+CHANGES IN VERSION 1.4.3
+------------------------
+
+o updated or fixed the following functions:
+
+   + findDMR: updated the function to allow it to run without number of processor specification
+
 CHANGES IN VERSION 1.4.2
 ------------------------
 
