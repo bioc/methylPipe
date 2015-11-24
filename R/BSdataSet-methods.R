@@ -475,10 +475,11 @@ setMethod('methstats', 'BSdataSet', function(object, chrom, mcClass='mCG', minC=
   else
     blocks <- splitChrs(chrs=Chrs, org=object@org)
   
-  cl <- makeCluster(Nproc, type='PSOCK')
+  cl <- makeCluster(Nproc, type='PSOCK',outfile='clusterlog.txt')
   clRes <- clusterApplyLB(cl, 1:nrow(blocks),
                           Methchr, Blocks=blocks, samples=object, 
                           mcContext=mcClass, mCs=minC, cov=coverage, Pval=pval)
+  stopCluster(cl)
   ind <- which(is.na(clRes)==TRUE)
   if(length(ind)!=0)
     clRes <- clRes[-c(ind)]
