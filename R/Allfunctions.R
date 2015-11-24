@@ -108,7 +108,7 @@ meth.call <- function(files_location, output_folder, no_overlap, read.context, N
             ind <- sapply(cov, function(x)(length(runValue(x))))
             cov <- cov[which(ind > 1)]
             uncov_GR <- as(cov, "GRanges")
-            #uncov_GR <- uncov_GR[mcols(uncov_GR)$score== 0]
+            uncov_GR <- uncov_GR[mcols(uncov_GR)$score== 0]
             filename <- file.path(output_folder, paste0(sample_name[[i]],"_uncov", ".Rdata"))
             Objectout <- paste0(sample_name[[i]],"_uncov")
             assign(Objectout, uncov_GR)
