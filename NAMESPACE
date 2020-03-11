@@ -15,7 +15,13 @@ importFrom(BiocGenerics,rbind, width, strand, "strand<-", as.data.frame, unlist)
 importFrom(parallel, makeCluster)
 importFrom(data.table,fread)
 importFrom(GenomeInfoDb,seqlengths,"seqlengths<-",seqnames)
-
+importFrom("grDevices", "dev.new", "rainbow")
+importFrom("graphics", "axis", "box", "hist", "lines", "mtext",
+             "pairs", "par", "plot", "points", "rect", "text")
+importFrom("stats", "binom.test", "cor.test", "dist", "hclust",
+             "kruskal.test", "p.adjust", "pchisq", "smooth.spline",
+             "wilcox.test")
+importFrom("utils", "write.table")
 importMethodsFrom(BiocGenerics, clusterApplyLB, clusterEvalQ)
 
 exportPattern("^[^\\.]")

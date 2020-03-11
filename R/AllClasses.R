@@ -14,13 +14,13 @@ included in the org reference sequence")
     if(length(which( !(mcols(tbdata)$Context %in% c('CG','CHG', 'CHH')))) > 0)
         return("the 4th column of the BSdata
          has to contain one of CG, CHG or CHH ..")
-    if(!is.numeric(mcols(tbdata)$C) || length(which(mcols(tbdata)$C < 1)) > 0)
+    if(!is.numeric(mcols(tbdata)$C) | length(which(mcols(tbdata)$C < 1)) > 0)
         return("the 5th column of the BSdata
          has to contain only positive integers >=1 ..")
-    if(!is.numeric(mcols(tbdata)$T) || length(which(mcols(tbdata)$T < 0)) > 0)
+    if(!is.numeric(mcols(tbdata)$T) | length(which(mcols(tbdata)$T < 0)) > 0)
         return("the 6th column of the BSdata
          has to contain only positive integers ..")
-    if(!is.numeric(mcols(tbdata)$Significance) ||
+    if(!is.numeric(mcols(tbdata)$Significance) |
        length(which(mcols(tbdata)$Significance < 0)) > 0)
         return("the 7th column of the BSdata
          has to contain only positive integers ..")
@@ -66,18 +66,18 @@ setValidity("GEcollection", function(object) {
     requiredAssays <- c("binmC", "binC", "binrC", "binscore")
     if ( !identical(requiredAssays, c(names(assays(object)))))
         return("assays slots have to in the order: binmC, binC, binrC, binscore")
-    if ( !is.na(assays(object)[["binmC"]]) &&
-        min(assays(object)[["binmC"]], na.rm = TRUE) < 0)
+    if ( all(!is.na(assays(object)[["binmC"]]) ,
+        min(assays(object)[["binmC"]], na.rm = TRUE) < 0))
         return("The binmC values have to either NA or positive")
-    if ( !is.na(assays(object)[["binC"]]) &&
-        min(assays(object)[["binC"]], na.rm = TRUE) < 0)
+    if ( all(!is.na(assays(object)[["binC"]]) ,
+        min(assays(object)[["binC"]], na.rm = TRUE) < 0))
         return("The binC values have to either NA or positive")
-    if (!is.na(assays(object)[["binrC"]]) &&
-        min(assays(object)[["binrC"]], na.rm = TRUE) < 0 &&
-        max(assays(object)[["binrC"]], na.rm = TRUE) > 1)
-        return("The binrC values has to be between 0 and 1")
-    if (!is.na(assays(object)[["binscore"]]) &&
-        min(assays(object)[["binscore"]], na.rm = TRUE) < 0)
+    if (all(!is.na(assays(object)[["binrC"]]) ,
+        min(assays(object)[["binrC"]], na.rm = TRUE) < 0 ,
+        max(assays(object)[["binrC"]], na.rm = TRUE) > 1))
+        return("The binrC values have to either NA or between 0 and 1")
+    if (all(!is.na(assays(object)[["binscore"]]) ,
+        min(assays(object)[["binscore"]], na.rm = TRUE) < 0))
         return("The binscore values have to either NA or positive")
     NULL
 })

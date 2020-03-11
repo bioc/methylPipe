@@ -285,7 +285,7 @@ BSprepare <-  function(files_location, output_folder, tabixPath, bc=1.5/100) {
 
                                         # splitting chromosomes in N Mb regions ..
 splitChrs <- function(chrs, org) {
-    if(!is(org,"BSgenome") && !is(org,"list"))
+    if(!is(org,"BSgenome") & !is(org,"list"))
         stop('org has to be either a list or an object of class BSgenome ..')
     chrs_org <- seqnames(org)
     if(any(!chrs %in% chrs_org))
@@ -312,13 +312,13 @@ consolidateDMRs <- function(DmrGR, pvThr=0.05, MethDiff_Thr=NULL, log2Er_Thr=NUL
         stop('DmrGR has to be of class GRanges ..')
     if(!is.numeric(pvThr))
         stop('pvThr has to be of class numeric ..')
-    if(!is.null(MethDiff_Thr) && !is.numeric(MethDiff_Thr))
+    if(!is.null(MethDiff_Thr) & !is.numeric(MethDiff_Thr))
         stop('MethDiff_Thr has to be either NULL or of class numeric ..')
-    if(!is.null(log2Er_Thr) && !is.numeric(log2Er_Thr))
+    if(!is.null(log2Er_Thr) & !is.numeric(log2Er_Thr))
       stop('log2Er_Thr has to be either NULL or of class numeric ..')
     if(!is.numeric(GAP))
         stop('GAP has to be of class numeric ..')
-    if(!is.null(MethDiff_Thr) && any(!type %in% c("hyper","hypo")))
+    if(!is.null(MethDiff_Thr) & any(!type %in% c("hyper","hypo")))
         stop('type has to be either NULL or one of hyper and hypo ..')
     if(!is.logical(correct))
         stop('correct has to be of class logical ..')
@@ -419,7 +419,7 @@ mapBSdata2GRanges <- function(GenoRanges, Sample, context='all', mC=1, depth=0,
         stop('Sample has to be of class BSdata ..')
     if(length(which(!(context %in% c('all','CG','CHG','CHH')))) > 0)
         stop('context has to be either all or a combination of CG, CHG, and CHH ..')
-    if(!is.numeric(mC) && mC < 0 )
+    if(!is.numeric(mC) & mC < 0 )
         stop('mC has to be of class numeric and positive..')
     if(!is.numeric(depth))
         stop('depth has to be of class numeric ..')
@@ -456,12 +456,12 @@ mapBSdata2GRanges <- function(GenoRanges, Sample, context='all', mC=1, depth=0,
         if(pValue < 1) indsList$p <- which(mcols(gr)$Significance > pV)
         tableInds <- table(unlist(indsList))
         inds <- names(tableInds)[tableInds == length(indsList)]
-        if(is.null(inds) || length(inds) == 0) return(NA)
+        if(is.null(inds) | length(inds) == 0) return(NA)
         return(gr[as.numeric(inds),])
     }
 
 
-    if(context != 'all' || mC > 1 || depth > 0 || pValue < 1) {
+    if(context != 'all' | mC > 1 | depth > 0 | pValue < 1) {
         NAinds <- as.numeric(which(is.na(res)))
         if(length(NAinds) > 0) {
             res[-NAinds] <- lapply(res[-NAinds], filterFun, context, mC, depth, pValue)
@@ -479,11 +479,11 @@ mapBSdata2GRanges <- function(GenoRanges, Sample, context='all', mC=1, depth=0,
 extractBinGRanges <- function(GenoRanges, bin, nbins) {
     if(!is(GenoRanges, "GRanges"))
         stop('GenoRanges has to be of class GRanges ..')
-    if(!is.numeric(bin) || length(bin) != 1 || is.na(bin))
+    if(!is.numeric(bin) | length(bin) != 1 | is.na(bin))
         stop(' bin has to be a single non-NA integer ')
-    if(!is.numeric(nbins) || length(nbins) != 1 || is.na(nbins))
+    if(!is.numeric(nbins) | length(nbins) != 1 | is.na(nbins))
         stop(' nbins has to be a single non-NA integer ')
-    if( bin < 1 || bin > nbins)
+    if( bin < 1 | bin > nbins)
         stop(' bin has to be between 1 and nbins ')
     binsize <- round(width(GenoRanges)/nbins)
     starts <- start(GenoRanges) + (bin-1)*binsize
@@ -505,7 +505,7 @@ mapBSdata2GRangesBin <- function(GenoRanges, Sample,
         stop('Sample has to be of class BSdata ..')
     if(length(which(!(context %in% c('all','CG','CHG','CHH')))) > 0)
         stop('context has to be either all or a combination of CG, CHG, and CHH ..')
-    if(!is.numeric(mC) && mC < 0 )
+    if(!is.numeric(mC) & mC < 0 )
         stop('mC has to be of class numeric and positive..')
     if(!is.numeric(depth))
         stop('depth has to be of class numeric ..')
@@ -652,13 +652,13 @@ profileDNAmetBin <- function(GenoRanges, Sample,
         stop('Sample has to be of class BSdata ..')
     if(length(which(!(mcCLASS %in% c('mCG','mCHG','mCHH')))) > 0)
         stop('mcCLASS has to be one of mCG, mCHG, and mCHH ..')
-    if(!is.numeric(mC) && mC < 0 )
+    if(!is.numeric(mC) & mC < 0 )
         stop('mC has to be of class numeric and positive..')
     if(!is.numeric(depthThr))
         stop('depthThr has to be of class numeric ..')
     if(!is.numeric(mCpv))
         stop('mCpv has to be of class numeric ..')
-    if(!is.null(minCoverage) && !is.numeric(minCoverage))
+    if(!is.null(minCoverage) & !is.numeric(minCoverage))
         stop('minCoverage has to be either NULL or of class numeric ..')
     if(!is.numeric(nbins))
         stop('nbins has to be of class numeric ..')
@@ -777,15 +777,15 @@ profileDNAmetBinParallel <- function(GenoRanges, Sample, mcCLASS='mCG',
         stop('Sample has to be of class BSdata ..')
     if(length(which(!(mcCLASS %in% c('mCG','mCHG','mCHH')))) > 0)
         stop('mcCLASS has to be one of mCG, mCHG, and mCHH ..')
-    if(!is.numeric(mC) && mC < 0 )
+    if(!is.numeric(mC) & mC < 0 )
         stop('mC has to be of class numeric and positive..')
     if(!is.numeric(depthThr))
         stop('depthThr has to be of class numeric ..')
     if(!is.numeric(mCpv))
         stop('mCpv has to be of class numeric ..')
-    if(!is.null(minCoverage) && !is.numeric(minCoverage))
+    if(!is.null(minCoverage) & !is.numeric(minCoverage))
         stop('minCoverage has to be either NULL or of class numeric ..')
-    if(!is.numeric(Nproc) && Nproc < 1)
+    if(!is.numeric(Nproc) & Nproc < 1)
         stop('Nproc has to be of class numeric ..')
     if(!is.numeric(nbins))
         stop('nbins has to be of class numeric ..')
@@ -827,23 +827,23 @@ profileDNAmetBinParallel <- function(GenoRanges, Sample, mcCLASS='mCG',
 
 plotMeth <- function(grl=NULL, colors=NULL, datatype=NULL, yLim, brmeth=NULL, mcContext="CG", annodata=NULL, 
                      transcriptDB, chr, start, end, org){
-    if(!is.null(grl) && !is(grl,'list') && !is(grl,'GElist'))
+    if(!is.null(grl) & !is(grl,'list') & !is(grl,'GElist'))
         stop('grl has to be either NULL or an object of class list or GElist...')
     if(is(grl,'list'))
         {
             if(any(!(sapply(grl, class) %in% c("GRanges", 'GEcollection'))))
                 stop('grl has to be a list of either GRanges or GEcollection object...')
         }
-    if(!is.null(brmeth) && !is(brmeth,'list'))
+    if(!is.null(brmeth) & !is(brmeth,'list'))
       stop('brmeth has to be either NULL or of class list ...')
     if(is(brmeth,'list'))
     {
       if(any(!(sapply(brmeth, class) %in% c("BSdata"))))
         stop('grl has to be a list of BSdata object...')
     }
-    if(is.null(grl) && is.null(brmeth))
+    if(is.null(grl) & is.null(brmeth))
       stop('both grl and brmeth cannot be NULL...')
-    if(!is.null(colors) && !is.character(colors))
+    if(!is.null(colors) & !is.character(colors))
       stop('colors has to be either NULL or of class character ...')
     
     if(!is.null(grl))
@@ -867,16 +867,16 @@ plotMeth <- function(grl=NULL, colors=NULL, datatype=NULL, yLim, brmeth=NULL, mc
             stop('datatype has to be an array containing
            one of: density, C, mC, rC, cols')
         }
-        if(length(datatype) != length(grl) && length(grl) != length(yLim))
+        if(length(datatype) != length(grl) & length(grl) != length(yLim))
           stop('grl, datatype and yLim has to be of same length ..')
       }
     }
     
     if(length(which(!(mcContext %in% c('all','CG','CHG','CHH')))) > 0)
       stop('mcContext has to be one of all, CG, CHG, and CHH ..')
-    if(!is.null(annodata) && !is(annodata,'GRangesList'))
+    if(!is.null(annodata) & !is(annodata,'GRangesList'))
       stop('annodata has to be either NULL or of class GRangesList ...')
-    if(!is(transcriptDB,"TxDb") && !is.null(transcriptDB))
+    if(!is(transcriptDB,"TxDb") & !is.null(transcriptDB))
         stop('transcriptDB has to be either NULL or an object of class TxDb ..')
     if(!is.character(chr))
         stop('chr has to be of class character ..')
