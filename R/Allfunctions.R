@@ -887,7 +887,8 @@ plotMeth <- function(grl=NULL, colors=NULL, datatype=NULL, yLim, brmeth=NULL, mc
     if(!is(org, "BSgenome"))
       stop('org has to be of class BSgenome ..')
     
-    gen <- org@provider_version
+  
+    gen <- metadata(org)$genome
     itrack <- IdeogramTrack(genome = gen, chromosome = chr)
     axisTrack <- GenomeAxisTrack()
     dTrack <- NULL
