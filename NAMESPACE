@@ -22,7 +22,7 @@ importFrom("stats", "binom.test", "cor.test", "dist", "hclust",
              "kruskal.test", "p.adjust", "pchisq", "smooth.spline",
              "wilcox.test")
 importFrom("utils", "write.table")
-importMethodsFrom(parallel, clusterApplyLB, clusterEvalQ)
+importFrom(parallel, clusterApplyLB, clusterEvalQ, stopCluster)
 
 exportPattern("^[^\\.]")
 
