@@ -14,7 +14,7 @@ importFrom(gplots, heatmap.2)
 importFrom(BiocGenerics,rbind, width, strand, "strand<-", as.data.frame, unlist)
 importFrom(parallel, makeCluster)
 importFrom(data.table,fread)
-importFrom(GenomeInfoDb,seqlengths,"seqlengths<-",seqnames)
+importFrom(Seqinfo,seqlengths,"seqlengths<-",seqnames)
 importFrom("grDevices", "dev.new", "rainbow")
 importFrom("graphics", "axis", "box", "hist", "lines", "mtext",
              "pairs", "par", "plot", "points", "rect", "text")
